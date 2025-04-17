@@ -23,7 +23,7 @@ app.get('/', (req, res)=>{
 
 // Main Routes
 app.use('/api/users', require('./routes/userRoute'));
-app.use('/api/nlpModel', require('./routes/nlpApiRoute'));
+app.use('/api/nlpApi', require('./routes/nlpApiRoute'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
