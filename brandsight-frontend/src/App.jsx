@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import GetStarted from "./assets/components/getStarted";
-// import Home from "./components/home";
-// import Login from "./components/login";
-// import SignUp from "./components/signup";
+import GetStarted from "./components/getStarted";
+import Home from "./components/home";
+import Login from "./components/login";
+import SignUp from "./components/signup";
 
 function App() {
 
@@ -10,9 +10,9 @@ function App() {
     <Router>
       <Routes>
         <Route  path="/" element={<GetStarted />} />
-        {/* <Route  path="/home" element={<Home />} />
+        <Route  path="/home" element={<Home />} />
         <Route  path="/login" element={<Login />} />
-        <Route  path="/signup" element={<SignUp />} /> */}
+        <Route  path="/signup" element={<SignUp />} /> 
       </Routes>
     </Router>
   )
