@@ -43,6 +43,7 @@ const analyzeSentiment = async (uid, brandURLType, title, icon, description, rev
 };
 
 const analyze = async (req, res) => {
+  console.log("Analyze request recieved by backend");
   const { UID,  brandURL, brandURLType, reviewNumber } = req.body;
 
   if (brandURLType === "PlayStoreApp") {
