@@ -59,6 +59,8 @@ def first_sentence(text: str) -> str:
 def analyze():
     data = request.json
 
+    print(data)
+
     if "reviews" not in data or "description" not in data:
         return jsonify({"error": "Missing 'reviews' or 'description' field"}), 400
 
@@ -67,6 +69,7 @@ def analyze():
     title = data["title"]
     icon = data["icon"]
     description = data["description"]
+    brandType = data["brandURLType"]
 
     negative = 0
     neutral = 0
