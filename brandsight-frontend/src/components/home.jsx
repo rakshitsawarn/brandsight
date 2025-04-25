@@ -119,7 +119,7 @@ const Home = () => {
         console.log("Analysis Started");
         
         try{
-            const response = await axios.post("http://localhost:5000/api/nlpModel/analyze", {
+            const response = await axios.post("http://localhost:5000/api/nlpApi/analyze", {
                 UID: user.uid,
                 brandURL,
                 brandURLType,
