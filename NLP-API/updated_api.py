@@ -4,7 +4,6 @@ from keybert import KeyBERT
 
 app = Flask(__name__)
 
-# Load models
 sentiment_pipeline = pipeline("sentiment-analysis")
 kw_model = KeyBERT()
 
@@ -67,6 +66,7 @@ def analyze():
     title = data["title"]
     icon = data["icon"]
     description = data["description"]
+    brandType = data["brandURLType"]
 
     negative = 0
     neutral = 0
@@ -129,5 +129,5 @@ def analyze():
         "analyzed_reviews": analyzed_reviews
     })
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
