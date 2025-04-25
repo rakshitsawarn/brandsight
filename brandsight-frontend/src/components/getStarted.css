@@ -31,7 +31,7 @@
     text-decoration: none;
     
     font-size: 20px;
-    color:darkgray;
+    color:black;
 }
 .signUp-btn{
     background-color: #01b954;
@@ -44,6 +44,19 @@
     padding: 8px;
 
     font-size: 18px;
+}
+.login-btn{
+    background-color: transparent;
+
+    border: none;
+    border-radius: 10px;
+
+    color: aliceblue;
+
+    padding: 8px;
+
+    font-size: 18px;
+    color: #141414;
 }
 .about{
     display: flex;
