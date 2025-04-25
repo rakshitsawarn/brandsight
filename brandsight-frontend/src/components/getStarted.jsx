@@ -16,7 +16,8 @@ const GetStarted = () => {
                 <a href="#contact">Contact</a>
             </div>
             <div className="nav-links-r">
-                <Link  to="/login" >Login</Link>
+                <button className ="login-btn" onClick={() => navigate("/login")}>Login</button>
+                {/* <Link  to="/login" >Login</Link> */}
                 <button className ="signUp-btn" onClick={() => navigate("/signup")}>SignUp</button>
             </div>
         </div>
