@@ -59,7 +59,7 @@ def first_sentence(text: str) -> str:
 def analyze():
     data = request.json
 
-    print(data)
+    #print(data)
 
     if "reviews" not in data or "description" not in data:
         return jsonify({"error": "Missing 'reviews' or 'description' field"}), 400

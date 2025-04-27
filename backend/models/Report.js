@@ -1,30 +1,30 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  confidence: { type: Number, required: true },
+  confidence: { type: Number },
   keywords: [{ type: String }],
-  rating: { type: Number, required: true },
-  review: { type: String, required: true },
-  sentiment: { type: String, enum: ['POSITIVE', 'NEGATIVE', 'NEUTRAL'], required: true },
-  user: { type: String, required: true }
+  rating: { type: Number },
+  review: { type: String },
+  sentiment: { type: String, enum: ['POSITIVE', 'NEGATIVE', 'NEUTRAL']},
+  user: { type: String }
 });
 
 const sentimentDistributionSchema = new mongoose.Schema({
-  negative: { type: Number, required: true },
-  neutral: { type: Number, required: true },
-  positive: { type: Number, required: true }
+  negative: { type: Number },
+  neutral: { type: Number },
+  positive: { type: Number }
 });
 
 const analysisReportSchema = new mongoose.Schema({
   uid: { type: String},
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  icon: { type: String, required: true },
+  title: { type: String },
+  description: { type: String },
+  icon: { type: String },
   keywords: [{ type: String }],
   sentiment_distribution: sentimentDistributionSchema,
   analyzed_reviews: [reviewSchema],
   suggestions: [{ type: String }],
-  success: { type: Boolean, required: true }
+  success: { type: Boolean }
 },
 {
   timestamps: true   // ← adds createdAt & updatedAt
