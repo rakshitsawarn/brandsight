@@ -21,6 +21,10 @@ services:
     volumes:
       - ./backend:/app
     command: npm run dev
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/brandsightDB
+    depends_on:
+      - mongo
 
   nlp-api:
     build:
@@ -30,3 +34,14 @@ services:
     volumes:
       - ./NLP-API:/app
     command: python api.py
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
