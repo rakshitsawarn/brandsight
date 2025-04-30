@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
-import {signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import axios from "axios";
 
 import './loginSignUp.css';
 
-const Login = () =>{
+const Login = () => {
     const navigate = useNavigate();
 
     const auth = getAuth();
@@ -29,21 +29,21 @@ const Login = () =>{
 
     const checkAndSetEmail = (e) => {
         const emailToCheck = e.target.value;
-        
+
         setEmail(emailToCheck);
 
         setAllFieldsFIlled(true);
         setLoginSuccess(true);
-        
+
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const testEmail = emailPattern.test(emailToCheck);
 
         setEmailIsValid(testEmail);
 
-        if (testEmail){
+        if (testEmail) {
             emailRef.current.style.borderColor = "black";
         }
-        else{
+        else {
             emailRef.current.style.borderColor = emailToCheck.length > 0 ? "red" : "black";
         }
     };
@@ -51,30 +51,30 @@ const Login = () =>{
     const handleEmailLogin = async (e) => {
         e.preventDefault();
 
-        if (email === "" | password === ""){
+        if (email === "" | password === "") {
             return setAllFieldsFIlled(false);
         }
-        else{
+        else {
             setAllFieldsFIlled(true);
         }
         try {
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    
-          console.log("Logged in as:", userCredential.user.email);
-    
-          setLoginSuccess(true);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-          navigate("/home");
+            console.log("Logged in as:", userCredential.user.email);
+
+            setLoginSuccess(true);
+
+            navigate("/home");
         } catch (error) {
-          console.error("Login error:", error.message);
+            console.error("Login error:", error.message);
 
-          setLoginSuccess(false);
+            setLoginSuccess(false);
         }
     }
 
     const handleGoogleSignIn = async (e) => {
         e.preventDefault();
-        
+
         setAllFieldsFIlled(true);
         setLoginSuccess(true);
 
@@ -87,13 +87,13 @@ const Login = () =>{
                 name: user.displayName,
                 email: user.email,
                 password: null,
-              }, {
+            }, {
                 headers: {
-                  "Content-Type": "application/json",
+                    "Content-Type": "application/json",
                 },
-              });
+            });
 
-            console.log("Google user created/logged in:",user.uid, user.displayName, user.email, user.photoURL);
+            console.log("Google user created/logged in:", user.uid, user.displayName, user.email, user.photoURL);
 
             navigate("/home");
         } catch (error) {
@@ -101,7 +101,7 @@ const Login = () =>{
         }
     };
 
-    return(
+    return (
         <div className="page">
             <div className="left-logo">
                 <div className="logo-box">
@@ -110,8 +110,10 @@ const Login = () =>{
             </div>
 
             <div className="right-container">
-                
-                <Link className="back-link" to="/">&lt; Back</Link>
+
+                <div className="back-link-container">
+                    <Link className="back-link" to="/">&lt; Back</Link>
+                </div>
 
                 <div className="content-container">
 
@@ -122,23 +124,23 @@ const Login = () =>{
                     <form onSubmit={handleEmailLogin}>
                         <div className="label-input">
                             <label>Email Address</label>
-                            <input 
+                            <input
                                 className="email-section"
                                 type="text"
                                 value={email}
                                 ref={emailRef}
                                 onChange={(e) => checkAndSetEmail(e)}
-                            
+
                             />
                         </div>
 
-                        {email.length>0 && !emailIsValid && <p className="error-text">Enter Valid Email</p>}
+                        {email.length > 0 && !emailIsValid && <p className="error-text">Enter Valid Email</p>}
 
                         <div className="label-input">
                             <label>Password</label>
-                            <input 
+                            <input
                                 className="password-section"
-                                type="password" 
+                                type="password"
                                 value={password}
                                 ref={passwordRef}
                                 onChange={(e) => {
@@ -150,14 +152,14 @@ const Login = () =>{
                             />
                         </div>
 
-                        {email.length===0 && password.length===0 && !allFieldsFIlled&& <p className="error-text">Please fill all fields</p>}
+                        {email.length === 0 && password.length === 0 && !allFieldsFIlled && <p className="error-text">Please fill all fields</p>}
 
                         {!loginSuccess && <p className="error-text">Email or Password is wrong</p>}
 
                         <button className="submit-btn" type="submit">Login</button>
 
                         <div className="line"><span className="or-text">Or</span></div>
-                        
+
                         <button className="google-btn" onClick={handleGoogleSignIn}>SignIn with Google</button>
                     </form>
 

@@ -30,7 +30,7 @@ const getAppIdFromUrl = (brandURL) => {
 
 const analyzeSentiment = async (uid, brandURLType, title, icon, description, reviews) => {
   try {
-      const response = await axios.post("playful-rabanadas-cf088a.netlify.app/analyze", {uid, brandURLType, title, icon, description, reviews});
+      const response = await axios.post("http://localhost:5001/analyze", {uid, brandURLType, title, icon, description, reviews});
 
       await saveReport(response.data);
       console.log("Saved report in DB");

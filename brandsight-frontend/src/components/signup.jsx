@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
-import {createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
@@ -11,7 +11,7 @@ import axios from "axios";
 
 import './loginSignUp.css'
 
-const SignUp = () =>{
+const SignUp = () => {
     const navigate = useNavigate();
 
     const auth = getAuth();
@@ -26,12 +26,12 @@ const SignUp = () =>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [passwordRule,setPasswordRules] = useState({
+    const [passwordRule, setPasswordRules] = useState({
         length: false,
         letter: false,
         number: false,
         specialChar: false
-      });
+    });
 
     const [emailIsValid, setEmailIsValid] = useState(false);
     const [passwordNotMatched, setPasswordNotMatched] = useState(true);
@@ -43,16 +43,16 @@ const SignUp = () =>{
     const checkAndSetEmail = (e) => {
         const emailToCheck = e.target.value;
         setEmail(emailToCheck);
-        
+
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const testEmail = emailPattern.test(emailToCheck);
 
         setEmailIsValid(testEmail);
 
-        if (testEmail){
+        if (testEmail) {
             emailRef.current.style.borderColor = "black";
         }
-        else{
+        else {
             emailRef.current.style.borderColor = emailToCheck.length > 0 ? "red" : "black";
         }
     };
@@ -85,23 +85,23 @@ const SignUp = () =>{
 
         const passTomatch = e.target.value;
 
-        if (password === passTomatch){
-          setPasswordNotMatched(false);
-          confirmPasswordRef.current.style.borderColor = "black";
+        if (password === passTomatch) {
+            setPasswordNotMatched(false);
+            confirmPasswordRef.current.style.borderColor = "black";
         }
-        else{
-          setPasswordNotMatched(true);
-          confirmPasswordRef.current.style.borderColor = passTomatch.length > 0 ? "red" : "black";
+        else {
+            setPasswordNotMatched(true);
+            confirmPasswordRef.current.style.borderColor = passTomatch.length > 0 ? "red" : "black";
         }
     };
 
     const handleEmailSignUp = async (e) => {
         e.preventDefault();
-    
-        try{
+
+        try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            
+
             const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&length=1&background=random&font-size=0.7`;
             await updateProfile(user, {
                 // displayName: name,
@@ -109,28 +109,28 @@ const SignUp = () =>{
             });
 
             await axios.post("http://localhost:5000/api/users/registerUser", {
-            UID: user.uid,
-            name,
-            email,
-            password,
+                UID: user.uid,
+                name,
+                email,
+                password,
             }, {
-            headers: {
-                "Content-Type": "application/json",
-            },
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
-                
+
             console.log("User created as:", userCredential.user.email, userCredential.user.photoURL);
-            
+
             navigate("/login");
         }
-        catch(error) {
+        catch (error) {
             console.error("SignUp error:", error.message);
         }
     };
 
     const handleGoogleSignIn = async (e) => {
         e.preventDefault();
-        
+
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -142,11 +142,11 @@ const SignUp = () =>{
                 name: user.displayName,
                 email: user.email,
                 password: null,
-              }, {
+            }, {
                 headers: {
-                  "Content-Type": "application/json",
+                    "Content-Type": "application/json",
                 },
-              });
+            });
 
             console.log("Google user created/logged in:", user.displayName, user.email, user.photoURL);
 
@@ -156,7 +156,7 @@ const SignUp = () =>{
         }
     };
 
-    return(
+    return (
         <div className="page">
             <div className="left-logo">
                 <div className="logo-box">
@@ -164,8 +164,10 @@ const SignUp = () =>{
                 </div>
             </div>
             <div className="right-container">
-                
-                <Link className="back-link" to="/">&lt; Back</Link>
+
+                <div className="back-link-container">
+                    <Link className="back-link" to="/">&lt; Back</Link>
+                </div>
 
                 <div className="content-container">
 
@@ -176,40 +178,40 @@ const SignUp = () =>{
                     <form onSubmit={handleEmailSignUp}>
                         <div className="label-input">
                             <label>Name</label>
-                            <input 
-                                className="name-section" 
-                                type="text" 
-                                value={name} 
-                                onChange={e => setName(e.target.value)} 
-                                />
+                            <input
+                                className="name-section"
+                                type="text"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                            />
                         </div>
 
                         <div className="label-input">
                             <label>Email Address</label>
-                            <input 
-                                className="email-section" 
-                                type="text" 
+                            <input
+                                className="email-section"
+                                type="text"
                                 value={email}
                                 ref={emailRef}
                                 onChange={(e) => checkAndSetEmail(e)}
                                 onFocus={() => setIsEmailFocused(true)}
                                 onBlur={() => setIsEmailFocused(false)}
-                                />
+                            />
                         </div>
 
-                        {isEmailFocused && email.length>0 && !emailIsValid && <p className="error-text">Enter Valid Email Address</p>}
+                        {isEmailFocused && email.length > 0 && !emailIsValid && <p className="error-text">Enter Valid Email Address</p>}
 
                         <div className="label-input">
                             <label>Password</label>
-                            <input 
-                                className="password-section" 
-                                type="password" 
+                            <input
+                                className="password-section"
+                                type="password"
                                 value={password}
                                 ref={passwordRef}
                                 onChange={(e) => checkAndSetPassword(e)}
                                 onFocus={() => setIsPasswordFocused(true)}
                                 onBlur={() => setIsPasswordFocused(false)}
-                                />
+                            />
                         </div>
 
                         {isPasswordFocused && password.length > 0 && (
@@ -221,15 +223,15 @@ const SignUp = () =>{
 
                         <div className="label-input">
                             <label>Confirm Password</label>
-                            <input 
-                                className="password-section" 
-                                type="password" 
+                            <input
+                                className="password-section"
+                                type="password"
                                 value={confirmPassword}
                                 ref={confirmPasswordRef}
                                 onChange={(e) => checkAndSetConfirmPassword(e)}
                                 onFocus={() => setIsConfirmPasswordFocused(true)}
                                 onBlur={() => setIsConfirmPasswordFocused(false)}
-                                />
+                            />
                         </div>
 
                         {isConfirmPasswordFocused && confirmPassword.length > 0 && passwordNotMatched && <p className="error-text">Passwords don't match</p>}

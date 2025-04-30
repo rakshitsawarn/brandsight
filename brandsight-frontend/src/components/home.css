@@ -128,6 +128,7 @@
 .nav-link-label{
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     padding: 3.5px 0px;
 }
@@ -149,12 +150,14 @@
 .icon-image{
     width: 50px;
     height: 50px;
-
+    cursor: pointer;
     filter: invert(1);
 }
 .sidebar-bottom{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
+
+
 
 .main-panel{
     display: flex;
@@ -216,6 +219,7 @@
 .fetch-btn{
     background-color: #01b954;
     color: white;
+    cursor: pointer;
 
     font-size: 18px;
 
@@ -230,6 +234,10 @@
 
     margin-top: 60px;
 }
+.para{
+    margin: 20px 20px 20px 20px;
+    text-align: justify;
+}
 .result-container{
     width: 100%;
 }
@@ -240,7 +248,6 @@
     justify-content: center;
 
     flex: 1;
-
     padding: 30px 30px;
     margin: 70px 5px 20px 20px;
 
@@ -284,6 +291,7 @@
     margin-top: 50px;
 
     gap: 20px;
+    cursor: pointer;
 }
 .over-text{
     margin-top: 30px;
@@ -303,6 +311,7 @@
 
     padding: 30px 30px;
     margin: 20px 5px 20px 20px;
+    
 
     border-radius: 8px;
     background-color: rgb(231, 231, 231);
@@ -315,16 +324,84 @@
 
     gap: 20px;
 }
-.expand-btns{
+/* .expand-btns{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     margin-top: 50px;
     margin-bottom: 20px;
 
     gap: 20px;
+} */
+
+/* Container styling - keeping your existing layout but adding some refinements */
+.expand-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    gap: 20px;
 }
+
+/* Base styling for all sentiment buttons */
+.sentiment-category-e {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 110px;
+    text-align: center;
+}
+
+
+
+/* Individual styling for each sentiment */
+.sentiment-category-e[onclick*="neg"] {
+    background: linear-gradient(135deg, #ff6b6b, #ff4757);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.sentiment-category-e[onclick*="neu"] {
+    background: linear-gradient(135deg, #f1f2f6, #dfe4ea);
+    color: #57606f;
+    border: 2px solid transparent;
+}
+
+.sentiment-category-e[onclick*="pos"] {
+    background: linear-gradient(135deg, #1dd1a1, #10ac84);
+    color: white;
+    border: 2px solid transparent;
+}
+.sentiment-category-e:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+}
+
+.sentiment-category-e[onclick*="neg"]:hover {
+    background: linear-gradient(135deg, #ff4757, #ff6b6b);
+}
+
+.sentiment-category-e[onclick*="neu"]:hover {
+    background: linear-gradient(135deg, #dfe4ea, #f1f2f6);
+}
+
+.sentiment-category-e[onclick*="pos"]:hover {
+    background: linear-gradient(135deg, #10ac84, #1dd1a1);
+}
+
+.sentiment-category-e:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .sentiment-category{
     padding: 10px;
 
@@ -497,6 +574,50 @@
 
     gap: 50px;
 }
+
+
+.downloadreport {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .downloadreport:hover {
+    background-color: #0055b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  .downloadreport:active {
+    background-color: #004494;
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .downloadreport::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+  }
+
+
+
 @media (max-width: 480px) {
     .user-name{
         display: none;
