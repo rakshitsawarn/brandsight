@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./brandsight-frontend
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./brandsight-frontend:/app
+    command: npm run dev
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: npm run dev
+
+  nlp-api:
+    build:
+      context: ./NLP-API
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./NLP-API:/app
+    command: python api.py
