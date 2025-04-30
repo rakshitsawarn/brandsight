@@ -5,7 +5,6 @@ services:
       context: ./brandsight-frontend
     ports:
       - "3000:3000"
-    working_dir: /app
     volumes:
       - ./brandsight-frontend:/app
     command: npm run dev
@@ -17,7 +16,6 @@ services:
       context: ./backend
     ports:
       - "5000:5000"
-    working_dir: /app
     volumes:
       - ./backend:/app
     command: npm run dev
@@ -39,7 +37,7 @@ services:
     image: mongo:6.0
     container_name: mongodb
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
