@@ -269,7 +269,10 @@ const Home = () => {
         console.log(selectedReport);
     }
 
-    const DownloadReport = () => {
+    const DownloadReport = async () => {
+
+        console.log("Btn clicked");
+
         const date = desiredReport["createdAt"];
         const formattedDate = formatDate(date);
         const icon = desiredReport["icon"];
@@ -288,12 +291,14 @@ const Home = () => {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = icon;
+
+        //img.src = "menu-icon.png";
     
         img.onload = async () => {
             // BrandSight Header
             doc.setFontSize(22);
             doc.setFont("helvetica", "bold");
-            doc.text("BrandSight Report", 105, cursorY, { align: "center" });
+            doc.text("Analysis Report", 105, cursorY, { align: "center" });
             cursorY += 10;
     
             doc.setDrawColor(180);
@@ -378,7 +383,9 @@ const Home = () => {
                 doc.text(lines, marginLeft, cursorY);
                 cursorY += lines.length * 5;
             });
-    
+            
+            console.log("About to Save");
+
             // Save the PDF
             await doc.save(`${title}_Report.pdf`);
             console.log("PDF Report Downloaded");
