@@ -588,7 +588,7 @@
     align-items: center;
     justify-content: center;
 
-    max-width:60%;
+    width:60%;
     min-width: 200px;
 
     gap: 8px;
@@ -601,7 +601,7 @@
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 600;
-    
+
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
