@@ -24,7 +24,7 @@ services:
     ports:
       - "5001:5001"
     volumes:
-    - ${USERPROFILE}:/app/hf-cache
+    - C:/Users/%USERNAME%/.cache/huggingface:/app/hf-cache
 
   mongodb:
     image: mongo
