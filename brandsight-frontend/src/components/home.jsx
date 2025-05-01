@@ -6,6 +6,11 @@ import axios from "axios";
 import './home.css';
 import useCurrentUser from "./currentUser";
 
+import Dashboard from "./Home_Component/dashboard";
+import History from "./Home_Component/history";
+import Report from "./Home_Component/report";
+import About from "./Home_Component/about";
+
 const Home = () => {
     const user = useCurrentUser();
     const navigate = useNavigate();
@@ -240,6 +245,7 @@ const Home = () => {
         setViewDashboard(false);
         setViewHistory(false);
         setViewAbout(true);
+        setViewReport(false);
     };
 
     const formatDate = (dateString) => {
@@ -251,8 +257,8 @@ const Home = () => {
         });
     };
 
-    const OpenReport = (key) =>{
-        
+    const OpenReport = (key) => {
+
         const selectedReport = history.find(report => report["_id"] === key);
 
         setDesiredReport(selectedReport);
@@ -262,7 +268,7 @@ const Home = () => {
 
         console.log(selectedReport);
     }
-    
+
     // const DownloadReport = () => {
     //     const date = desiredReport["createdAt"];
     //     const formattedDate = formatDate(date);
@@ -272,36 +278,36 @@ const Home = () => {
     //     const sentiment_distribution = desiredReport["sentiment_distribution"];
     //     const suggestions = desiredReport["suggestions"];
     //     const analyzed_reviews = desiredReport["analyzed_reviews"];
-    
+
     //     const doc = new jsPDF();
     //     const marginLeft = 20;
     //     const lineWidth = 170;
     //     let cursorY = 20;
-    
+
     //     // Load BrandSight Logo Image (Stored as brandsight_logo.png)
     //     const logoImg = new Image();
     //     logoImg.crossOrigin = "anonymous";
     //     logoImg.src = "brandsight_logo.png";  // Path to the logo image file
-    
+
     //     logoImg.onload = async () => {
     //         // BrandSight Header with logo on top-left
     //         doc.addImage(logoImg, "PNG", marginLeft, cursorY, 30, 30); // Logo size 30x30
     //         cursorY += 5;
-    
+
     //         doc.setFontSize(22);
     //         doc.setFont("helvetica", "bold");
     //         doc.text("BrandSight Report", 105, cursorY, { align: "center" });
     //         cursorY += 10;
-    
+
     //         doc.setDrawColor(180);
     //         doc.line(marginLeft, cursorY, marginLeft + lineWidth, cursorY); // underline
     //         cursorY += 10;
-    
+
     //         // Add Brand Icon and Title Side-by-Side
     //         const img = new Image();
     //         img.crossOrigin = "anonymous";
     //         img.src = icon;
-    
+
     //         img.onload = async () => {
     //             doc.addImage(img, "PNG", marginLeft, cursorY, 20, 20);
     //             doc.setFontSize(16);
@@ -311,7 +317,7 @@ const Home = () => {
     //             doc.setFont("helvetica", "normal");
     //             doc.text(`Date: ${formattedDate}`, marginLeft + 25, cursorY + 16);
     //             cursorY += 30;
-    
+
     //             // Description
     //             doc.setFontSize(14);
     //             doc.setFont("helvetica", "bold");
@@ -319,20 +325,20 @@ const Home = () => {
     //             doc.setDrawColor(220);
     //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
     //             cursorY += 8;
-    
+
     //             doc.setFontSize(10);
     //             doc.setFont("helvetica", "normal");
     //             const splitDesc = doc.splitTextToSize(description, lineWidth);
     //             doc.text(splitDesc, marginLeft, cursorY);
     //             cursorY += splitDesc.length * 5 + 10;
-    
+
     //             // Sentiment Distribution
     //             doc.setFontSize(14);
     //             doc.setFont("helvetica", "bold");
     //             doc.text("Sentiment Distribution", marginLeft, cursorY);
     //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
     //             cursorY += 8;
-    
+
     //             doc.setFontSize(10);
     //             doc.setFont("helvetica", "normal");
     //             doc.text(`Positive: ${sentiment_distribution.positive}%`, marginLeft, cursorY);
@@ -341,14 +347,14 @@ const Home = () => {
     //             cursorY += 6;
     //             doc.text(`Negative: ${sentiment_distribution.negative}%`, marginLeft, cursorY);
     //             cursorY += 10;
-    
+
     //             // AI Suggestions
     //             doc.setFontSize(14);
     //             doc.setFont("helvetica", "bold");
     //             doc.text("AI Suggestions", marginLeft, cursorY);
     //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
     //             cursorY += 8;
-    
+
     //             doc.setFontSize(10);
     //             doc.setFont("helvetica", "normal");
     //             suggestions.forEach((sug, idx) => {
@@ -357,37 +363,37 @@ const Home = () => {
     //                 cursorY += lines.length * 5;
     //             });
     //             cursorY += 10;
-    
+
     //             // Analyzed Reviews
     //             doc.setFontSize(14);
     //             doc.setFont("helvetica", "bold");
     //             doc.text("Analyzed Reviews", marginLeft, cursorY);
     //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
     //             cursorY += 8;
-    
+
     //             doc.setFontSize(10);
     //             doc.setFont("helvetica", "normal");
-    
+
     //             analyzed_reviews.forEach((review, idx) => {
     //                 const reviewText = `${idx + 1}. ${review.user} - "${review.review}" [Sentiment: ${review.sentiment}, Rating: ${review.rating}]`;
     //                 const lines = doc.splitTextToSize(reviewText, lineWidth);
-    
+
     //                 if (cursorY + lines.length * 5 > 280) {
     //                     doc.addPage();
     //                     cursorY = 20;
     //                 }
-    
+
     //                 doc.text(lines, marginLeft, cursorY);
     //                 cursorY += lines.length * 5;
     //             });
-    
+
     //             // Save the PDF
     //             await doc.save(`${title}_Report.pdf`);
     //             console.log("PDF Report Downloaded");
     //         };
     //     };
     // };
-    
+
     return (
         <>
             <div className="body-division">
@@ -454,208 +460,50 @@ const Home = () => {
                     </div>
                 </div>
 
-                {viewDashboard && <div className="main-panel">
+                {viewDashboard && (
+                    <Dashboard
+                        brandURL={brandURL}
+                        setBrandURL={setBrandURL}
+                        reviewNumber={reviewNumber}
+                        setReviewNumber={setReviewNumber}
+                        analyzeBrand={analyzeBrand}
+                        gotResult={gotResult}
+                        result={result}
+                        expandReviews={expandReviews}
+                        expandNegative={expandNegative}
+                        expandNeutral={expandNeutral}
+                        expandPositive={expandPositive}
+                    />
+                )}
 
-                    <p className="heading">Analyze a Brand's Reputation</p>
-                    <p className="sub-heading">Get real-time sentiment insights from app or store reviews</p>
-                    <input
-                        type="text"
-                        className="url-field"
-                        placeholder="Enter URL"
-                        value={brandURL}
-                        onChange={(e) => setBrandURL(e.target.value)} />
+                {viewHistory && (
+                    <History
+                        history={history}
+                        OpenReport={OpenReport}
+                        formatDate={formatDate}
+                    />
+                )}
 
-                    <div className="range-selection">
-                        <label>Number of latest reviews to Analyze: </label>
-                        <input
-                            type="number"
-                            className="review-number-input"
-                            value={reviewNumber}
-                            onChange={(e) => setReviewNumber(e.target.value)} />
-                    </div>
+                {viewAbout && (
+                    <About
+                        description="BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple."
+                        team={[
+                            { name: "Harshwardhan Saini", img: "null" },
+                            { name: "Amruta Saharkar", img: "amruta Capstone.jpg" },
+                            { name: "Rakshit Sawarn", img: "Rakshit Sawarn.png" },
+                        ]}
+                    />
+                )}
 
-                    <button className="fetch-btn" onClick={analyzeBrand}>Fetch & Analyze ➜</button>
-
-                    {gotResult && <div className="result-container">
-                        <div className="overview">
-                            <p className='over-heading'>Overview</p>
-
-                            <div className="about-brand">
-                                <img src={result.icon} alt="Brand Image" className="brand-image" />
-                                <div className="about-brand-content">
-                                    <p>Title: {result.title}</p>
-                                    <p>Description: {result.description}</p>
-                                </div>
-
-                            </div>
-
-                            <div className='over-results'>
-                                <div className='sentiment-category'>Negative: {result.sentiment_distribution['negative']}%</div>
-                                <div className='sentiment-category'>Neutral: {result.sentiment_distribution['neutral']}%</div>
-                                <div className='sentiment-category'>Positive: {result.sentiment_distribution['positive']}%</div>
-                            </div>
-
-                            <p className='over-text'>Most users had a positive experience overall.</p>
-                        </div>
-
-
-
-                        <div className="suggestions">
-                            <p className='over-heading'>Suggestions</p>
-
-                            <Suggestions suggestions={result.suggestions} />
-
-                        </div>
-
-                        {/* <div className="keywords">
-                            <p className='over-heading'>Keywords</p>
-
-                            <div className='keyword-container'>
-                                {result.keywords.map(keyword => (<div className='keyword'>{keyword}</div>))}
-                            </div>
-
-                        </div> */}
-
-                        <div className="review-breakdown">
-                            <p className='over-heading'>Manual Analysis</p>
-
-                            <div className='results'>
-                                <div className="expand-btns">
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("neg")}>Negative &gt;</div>
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("neu")}>Neutral &gt;</div>
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("pos")}>Positive &gt;</div>
-                                </div>
-
-                                <div className="reviews">
-                                    {expandNegative &&
-                                        (result.reviews.filter(review => (review["sentiment"] === 'NEGATIVE')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                    {expandNeutral &&
-                                        (result.reviews.filter(review => (review["sentiment"] === 'NEUTRAL')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                    {expandPositive &&
-                                        (result.reviews.filter(review => (review["sentiment"] === 'POSITIVE')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {/* <button onClick={DownloadReport} className="downloadreport">Download Report</button> */}
-
-
-                    </div>}
-
-                </div>}
-
-                {viewHistory && <div className="main-panel" style={{ justifyContent: "flex-start" }}>
-
-                    {history.map((report) => (
-                        <div className="reports-container" key={report._id} onClick={() => OpenReport(report._id)}>
-                            <div className="report">
-                                <img src={report["icon"]} alt="Brand Image" className="brand-image" />
-                                <div className="about-brand-content">
-                                    <p>Title: {report["title"]}</p>
-                                    <p>Reviews Analyzed: {report["analyzed_reviews"].length}</p>
-                                    <p>{formatDate(report["createdAt"])}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>}
-
-                {viewAbout && <div className="main-panel" style={{ justifyContent: "flex-start" }}>
-                    <h1>About us</h1>
-                    <p className="para">BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple.</p>
-                    <h1>Our Team</h1>
-                    <div className="features-container" id="features">
-                        <div className="features">
-                            <div className="feature">
-                                <img src="null" alt="Feature 1" />
-                                <p>Harshwardhan Saini</p>
-                            </div>
-                            <div className="feature">
-                                <img src="null" alt="Feature 2" className="definiti" />
-                                <p>Amruta Vivek Saharkar</p>
-                            </div>
-                            <div className="feature">
-                                <img src="null" alt="Feature 3" className="feature_2" />
-                                <p>Rakshit Sawarn</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                </div>}
-
-                {viewReport && <div className="main-panel">
-                    <div className="result-container">
-                        <div className="overview" style={{ marginTop: '0px', marginRight: '5px' }}>
-                            <p className='over-heading'>Overview</p>
-
-                            <div className="about-brand">
-                                <img src={desiredReport["icon"]} alt="Brand Image" className="brand-image" />
-                                <div className="about-brand-content">
-                                    <p>Title: {desiredReport["title"]}</p>
-                                    <p>Description: {desiredReport["description"]}</p>
-                                </div>
-                            </div>
-
-                            <div className='over-results'>
-                                <div className='sentiment-category'>Negative: {desiredReport["sentiment_distribution"]['negative']}%</div>
-                                <div className='sentiment-category'>Neutral: {desiredReport["sentiment_distribution"]['neutral']}%</div>
-                                <div className='sentiment-category'>Positive: {desiredReport["sentiment_distribution"]['positive']}%</div>
-                            </div>
-
-                            <p className='over-text'>Most users had a positive experience overall.</p>
-                        </div>
-
-                        <div className="suggestions" style={{ marginTop: '20px', marginBottom: '0px', marginRight: '5px' }}>
-                            <p className='over-heading'>Suggestions</p>
-
-                            <Suggestions suggestions={desiredReport["suggestions"]} />
-
-                        </div>
-
-                        {/* <div className="keywords">
-                            <p className='over-heading'>Keywords</p>
-
-                            <div className='keyword-container'>
-                                {result.keywords.map(keyword => (<div className='keyword'>{keyword}</div>))}
-                            </div>
-
-                        </div> */}
-
-                        <div className="review-breakdown" style={{ marginTop: '20px', marginBottom: '20px', marginRight: '5px' }}>
-                            <p className='over-heading'>Manual Analysis</p>
-
-                            <div className='results'>
-                                <div className="expand-btns">
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("neg")}>Negative &gt;</div>
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("neu")}>Neutral &gt;</div>
-                                    <div className='sentiment-category-e' onClick={() => expandReviews("pos")}>Positive &gt;</div>
-                                </div>
-
-                                <div className="reviews">
-                                    {expandNegative &&
-                                        (desiredReport["analyzed_reviews"].filter(review => (review["sentiment"] === 'NEGATIVE')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                    {expandNeutral &&
-                                        (desiredReport["analyzed_reviews"].filter(review => (review["sentiment"] === 'NEUTRAL')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                    {expandPositive &&
-                                        (desiredReport["analyzed_reviews"].filter(review => (review["sentiment"] === 'POSITIVE')).map(review => (<div className='review'>{review["review"]}</div>)))
-                                    }
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    {/* <button onClick={DownloadReport} className="downloadreport">Donload Report</button> */}
-                </div>}
-
+                {viewReport && (
+                    <Report
+                        desiredReport={desiredReport}
+                        expandNegative={expandNegative}
+                        expandNeutral={expandNeutral}
+                        expandPositive={expandPositive}
+                        expandReviews={expandReviews}
+                    />
+                )}
             </div>
         </>
     );
