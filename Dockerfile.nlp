@@ -10,4 +10,6 @@ COPY ./NLP-API /app
 
 EXPOSE 5001
 
-CMD ["python", "api.py"]
+ENV TRANSFORMERS_CACHE=/app/hf-cache
+
+CMD ["python", "updated_api.py"]
