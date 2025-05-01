@@ -23,8 +23,6 @@ services:
       dockerfile: Dockerfile.nlp
     ports:
       - "5001:5001"
-    volumes:
-    - C:/Users/%USERNAME%/.cache/huggingface:/app/hf-cache
 
   mongodb:
     image: mongo
