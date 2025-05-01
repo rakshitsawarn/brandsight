@@ -25,7 +25,8 @@ const Dashboard = ({
     expandReviews = () => { },
     expandNegative = false,
     expandNeutral = false,
-    expandPositive = false
+    expandPositive = false,
+    DownloadReport = () => { }
 }) => {
     return (
         <div className="main-panel">
@@ -137,6 +138,7 @@ const Dashboard = ({
                             </div>
                         </div>
                     </div>
+                    <button onClick={DownloadReport} className="downloadreport">Download Report</button> 
                 </div>
             )}
         </div>

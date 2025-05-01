@@ -269,130 +269,121 @@ const Home = () => {
         console.log(selectedReport);
     }
 
-    // const DownloadReport = () => {
-    //     const date = desiredReport["createdAt"];
-    //     const formattedDate = formatDate(date);
-    //     const icon = desiredReport["icon"];
-    //     const title = desiredReport["title"];
-    //     const description = desiredReport["description"];
-    //     const sentiment_distribution = desiredReport["sentiment_distribution"];
-    //     const suggestions = desiredReport["suggestions"];
-    //     const analyzed_reviews = desiredReport["analyzed_reviews"];
-
-    //     const doc = new jsPDF();
-    //     const marginLeft = 20;
-    //     const lineWidth = 170;
-    //     let cursorY = 20;
-
-    //     // Load BrandSight Logo Image (Stored as brandsight_logo.png)
-    //     const logoImg = new Image();
-    //     logoImg.crossOrigin = "anonymous";
-    //     logoImg.src = "brandsight_logo.png";  // Path to the logo image file
-
-    //     logoImg.onload = async () => {
-    //         // BrandSight Header with logo on top-left
-    //         doc.addImage(logoImg, "PNG", marginLeft, cursorY, 30, 30); // Logo size 30x30
-    //         cursorY += 5;
-
-    //         doc.setFontSize(22);
-    //         doc.setFont("helvetica", "bold");
-    //         doc.text("BrandSight Report", 105, cursorY, { align: "center" });
-    //         cursorY += 10;
-
-    //         doc.setDrawColor(180);
-    //         doc.line(marginLeft, cursorY, marginLeft + lineWidth, cursorY); // underline
-    //         cursorY += 10;
-
-    //         // Add Brand Icon and Title Side-by-Side
-    //         const img = new Image();
-    //         img.crossOrigin = "anonymous";
-    //         img.src = icon;
-
-    //         img.onload = async () => {
-    //             doc.addImage(img, "PNG", marginLeft, cursorY, 20, 20);
-    //             doc.setFontSize(16);
-    //             doc.setFont("helvetica", "bold");
-    //             doc.text(title, marginLeft + 25, cursorY + 8);
-    //             doc.setFontSize(10);
-    //             doc.setFont("helvetica", "normal");
-    //             doc.text(`Date: ${formattedDate}`, marginLeft + 25, cursorY + 16);
-    //             cursorY += 30;
-
-    //             // Description
-    //             doc.setFontSize(14);
-    //             doc.setFont("helvetica", "bold");
-    //             doc.text("Description", marginLeft, cursorY);
-    //             doc.setDrawColor(220);
-    //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
-    //             cursorY += 8;
-
-    //             doc.setFontSize(10);
-    //             doc.setFont("helvetica", "normal");
-    //             const splitDesc = doc.splitTextToSize(description, lineWidth);
-    //             doc.text(splitDesc, marginLeft, cursorY);
-    //             cursorY += splitDesc.length * 5 + 10;
-
-    //             // Sentiment Distribution
-    //             doc.setFontSize(14);
-    //             doc.setFont("helvetica", "bold");
-    //             doc.text("Sentiment Distribution", marginLeft, cursorY);
-    //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
-    //             cursorY += 8;
-
-    //             doc.setFontSize(10);
-    //             doc.setFont("helvetica", "normal");
-    //             doc.text(`Positive: ${sentiment_distribution.positive}%`, marginLeft, cursorY);
-    //             cursorY += 6;
-    //             doc.text(`Neutral: ${sentiment_distribution.neutral}%`, marginLeft, cursorY);
-    //             cursorY += 6;
-    //             doc.text(`Negative: ${sentiment_distribution.negative}%`, marginLeft, cursorY);
-    //             cursorY += 10;
-
-    //             // AI Suggestions
-    //             doc.setFontSize(14);
-    //             doc.setFont("helvetica", "bold");
-    //             doc.text("AI Suggestions", marginLeft, cursorY);
-    //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
-    //             cursorY += 8;
-
-    //             doc.setFontSize(10);
-    //             doc.setFont("helvetica", "normal");
-    //             suggestions.forEach((sug, idx) => {
-    //                 const lines = doc.splitTextToSize(`${idx + 1}. ${sug}`, lineWidth);
-    //                 doc.text(lines, marginLeft, cursorY);
-    //                 cursorY += lines.length * 5;
-    //             });
-    //             cursorY += 10;
-
-    //             // Analyzed Reviews
-    //             doc.setFontSize(14);
-    //             doc.setFont("helvetica", "bold");
-    //             doc.text("Analyzed Reviews", marginLeft, cursorY);
-    //             doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
-    //             cursorY += 8;
-
-    //             doc.setFontSize(10);
-    //             doc.setFont("helvetica", "normal");
-
-    //             analyzed_reviews.forEach((review, idx) => {
-    //                 const reviewText = `${idx + 1}. ${review.user} - "${review.review}" [Sentiment: ${review.sentiment}, Rating: ${review.rating}]`;
-    //                 const lines = doc.splitTextToSize(reviewText, lineWidth);
-
-    //                 if (cursorY + lines.length * 5 > 280) {
-    //                     doc.addPage();
-    //                     cursorY = 20;
-    //                 }
-
-    //                 doc.text(lines, marginLeft, cursorY);
-    //                 cursorY += lines.length * 5;
-    //             });
-
-    //             // Save the PDF
-    //             await doc.save(`${title}_Report.pdf`);
-    //             console.log("PDF Report Downloaded");
-    //         };
-    //     };
-    // };
+    const DownloadReport = () => {
+        const date = desiredReport["createdAt"];
+        const formattedDate = formatDate(date);
+        const icon = desiredReport["icon"];
+        const title = desiredReport["title"];
+        const description = desiredReport["description"];
+        const sentiment_distribution = desiredReport["sentiment_distribution"];
+        const suggestions = desiredReport["suggestions"];
+        const analyzed_reviews = desiredReport["analyzed_reviews"];
+    
+        const doc = new jsPDF();
+        const marginLeft = 20;
+        const lineWidth = 170;
+        let cursorY = 20;
+    
+        // Load Icon Image
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = icon;
+    
+        img.onload = async () => {
+            // BrandSight Header
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.text("BrandSight Report", 105, cursorY, { align: "center" });
+            cursorY += 10;
+    
+            doc.setDrawColor(180);
+            doc.line(marginLeft, cursorY, marginLeft + lineWidth, cursorY); // underline
+            cursorY += 10;
+    
+            // Add Brand Icon and Title Side-by-Side
+            doc.addImage(img, "PNG", marginLeft, cursorY, 20, 20);
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            doc.text(title, marginLeft + 25, cursorY + 8);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Date: ${formattedDate}`, marginLeft + 25, cursorY + 16);
+            cursorY += 30;
+    
+            // Description
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Description", marginLeft, cursorY);
+            doc.setDrawColor(220);
+            doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
+            cursorY += 8;
+    
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            const splitDesc = doc.splitTextToSize(description, lineWidth);
+            doc.text(splitDesc, marginLeft, cursorY);
+            cursorY += splitDesc.length * 5 + 10;
+    
+            // Sentiment Distribution
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Sentiment Distribution", marginLeft, cursorY);
+            doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
+            cursorY += 8;
+    
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Positive: ${sentiment_distribution.positive}%`, marginLeft, cursorY);
+            cursorY += 6;
+            doc.text(`Neutral: ${sentiment_distribution.neutral}%`, marginLeft, cursorY);
+            cursorY += 6;
+            doc.text(`Negative: ${sentiment_distribution.negative}%`, marginLeft, cursorY);
+            cursorY += 10;
+    
+            // AI Suggestions
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("AI Suggestions", marginLeft, cursorY);
+            doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
+            cursorY += 8;
+    
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            suggestions.forEach((sug, idx) => {
+                const lines = doc.splitTextToSize(`${idx + 1}. ${sug}`, lineWidth);
+                doc.text(lines, marginLeft, cursorY);
+                cursorY += lines.length * 5;
+            });
+            cursorY += 10;
+    
+            // Analyzed Reviews
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Analyzed Reviews", marginLeft, cursorY);
+            doc.line(marginLeft, cursorY + 2, marginLeft + lineWidth, cursorY + 2);
+            cursorY += 8;
+    
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+    
+            analyzed_reviews.forEach((review, idx) => {
+                const reviewText = `${idx + 1}. ${review.user} - "${review.review}" [Sentiment: ${review.sentiment}, Rating: ${review.rating}]`;
+                const lines = doc.splitTextToSize(reviewText, lineWidth);
+    
+                if (cursorY + lines.length * 5 > 280) {
+                    doc.addPage();
+                    cursorY = 20;
+                }
+    
+                doc.text(lines, marginLeft, cursorY);
+                cursorY += lines.length * 5;
+            });
+    
+            // Save the PDF
+            await doc.save(`${title}_Report.pdf`);
+            console.log("PDF Report Downloaded");
+        };
+    };
 
     return (
         <>
@@ -473,6 +464,7 @@ const Home = () => {
                         expandNegative={expandNegative}
                         expandNeutral={expandNeutral}
                         expandPositive={expandPositive}
+                        DownloadReport={DownloadReport}
                     />
                 )}
 
@@ -502,6 +494,7 @@ const Home = () => {
                         expandNeutral={expandNeutral}
                         expandPositive={expandPositive}
                         expandReviews={expandReviews}
+                        DownloadReport={DownloadReport}
                     />
                 )}
             </div>

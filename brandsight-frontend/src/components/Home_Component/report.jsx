@@ -23,6 +23,7 @@ const Report = ({
     expandNeutral = false,
     expandPositive = false,
     expandReviews = () => { },
+    DownloadReport = () => { }
 }) => {
     // Safe data extraction with defaults
     const safeReport = desiredReport || {};
@@ -148,6 +149,8 @@ const Report = ({
                         </div>
                     </div>
                 </div>
+
+                <button onClick={DownloadReport} className="downloadreport">Download Report</button>
             </div>
         </div>
     );
