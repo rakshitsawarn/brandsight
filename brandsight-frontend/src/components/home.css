@@ -581,6 +581,7 @@
     justify-content: center;
 
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .download-btn {
@@ -588,7 +589,7 @@
     align-items: center;
     justify-content: center;
 
-    width:60%;
+    width:50%;
     min-width: 200px;
 
     gap: 8px;
