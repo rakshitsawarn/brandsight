@@ -1,6 +1,8 @@
-# backend/Dockerfile
 FROM node:18-alpine
-WORKDIR /app
-COPY . .
+
+WORKDIR /frontend
+COPY ./brandsight-frontend /frontend
+
 RUN npm install
+
 CMD ["npm", "run", "dev"]

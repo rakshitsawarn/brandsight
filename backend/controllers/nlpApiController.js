@@ -1,7 +1,10 @@
-const gplay = require("google-play-scraper").default;
-const axios = require("axios");
+import gplay from "google-play-scraper";
+import axios from "axios";
+import Report from '../models/Report.js'
+// const gplay = require("google-play-scraper").default;
+// const axios = require("axios");
 
-const Report = require('../models/Report')
+// const Report = require('../models/Report')
 
 const saveReport = async (reportData) => {
   console.log('Saving report in DB');
@@ -30,7 +33,7 @@ const getAppIdFromUrl = (brandURL) => {
 
 const analyzeSentiment = async (uid, brandURLType, title, icon, description, reviews) => {
   try {
-      const response = await axios.post("http://localhost:5001/analyze", {uid, brandURLType, title, icon, description, reviews});
+      const response = await axios.post("http://nlp-api:5001/analyze", {uid, brandURLType, title, icon, description, reviews});
 
       await saveReport(response.data);
       console.log("Saved report in DB");
@@ -88,4 +91,5 @@ const analyze = async (req, res) => {
   }
 };
 
-module.exports = { analyze };
+// module.exports = { analyze };
+export { analyze };

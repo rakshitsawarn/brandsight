@@ -1,5 +1,7 @@
-const User = require('../models/user')
-const Report = require('../models/Report')
+import User from '../models/user.js'
+import Report from '../models/Report.js'
+// const User = require('../models/user')
+// const Report = require('../models/Report')
 
 const registerUser = async (req, res) => {
   const { UID, name, email, password } = req.body;
@@ -55,4 +57,5 @@ const getHistory = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, getUserData, getHistory };
+// module.exports = { registerUser, getUserData, getHistory };
+export { registerUser, getUserData, getHistory };

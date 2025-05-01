@@ -55,6 +55,10 @@ def first_sentence(text: str) -> str:
             return text[:idx + 1].strip()   
     return text.strip() 
 
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "Brand Analyzer NLP API is running!"}), 200
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
     data = request.json

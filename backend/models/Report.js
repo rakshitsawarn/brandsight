@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+// const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
   confidence: { type: Number },
@@ -30,4 +31,7 @@ const analysisReportSchema = new mongoose.Schema({
   timestamps: true   // ← adds createdAt & updatedAt
 });
 
-module.exports = mongoose.model('AnalysisReport', analysisReportSchema);
+// module.exports = mongoose.model('AnalysisReport', analysisReportSchema);
+
+const Report = mongoose.model('AnalysisReport', analysisReportSchema);
+export default Report;
