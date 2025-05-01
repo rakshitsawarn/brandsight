@@ -290,9 +290,9 @@ const Home = () => {
         // Load Icon Image
         const img = new Image();
         img.crossOrigin = "anonymous";
-        img.src = icon;
+        // img.src = icon;
 
-        //img.src = "menu-icon.png";
+        img.src = icon || "/PlayStore.jpeg";
     
         img.onload = async () => {
             // BrandSight Header
