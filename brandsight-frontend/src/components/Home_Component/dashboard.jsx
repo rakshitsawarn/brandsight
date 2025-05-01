@@ -138,7 +138,9 @@ const Dashboard = ({
                             </div>
                         </div>
                     </div>
-                    <button onClick={DownloadReport} className="downloadreport">Download Report</button> 
+                    <div className='download-btn-container'>
+                        <button onClick={DownloadReport} className="download-btn">Download Report</button>
+                    </div> 
                 </div>
             )}
         </div>
