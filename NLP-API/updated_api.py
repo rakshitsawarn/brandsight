@@ -85,7 +85,7 @@ def is_fake_review(review_text, rating=None, timestamp=None, user=None):
     # 7. Check for promotional/sponsored content indicators
     promo_indicators = ["sponsored", "received for free", "in exchange for", "for my honest review", 
                         "was provided", "company sent", "promotional", "ambassador", "received complimentary",
-                        "received product", "sample", "hashtag", "#ad", "#sponsored", "#partner", "influencer"]
+                        "received product", "sample", "hashtag", "#ad", "#sponsored", "#partner", "influencer", "promo","For promotional purposes", "For promo only"]
     
     for indicator in promo_indicators:
         if indicator in review_text:
