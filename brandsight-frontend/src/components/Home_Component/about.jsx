@@ -7,7 +7,7 @@ const About = ({ description, team }) => {
             <div className="features-container" id="features">
                 <div className="features">
                     <div className="feature">
-                        <img src="null" alt="Feature 1" />
+                        <img src="harshwardhan.jpg" alt="Feature 1" />
                         <p>Harshwardhan Saini</p>
                     </div>
                     <div className="feature">

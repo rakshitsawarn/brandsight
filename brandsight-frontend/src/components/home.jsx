@@ -104,6 +104,8 @@ const Home = () => {
   };
 
   const analyzeBrand = async () => {
+    e.preventDefault();
+
     setGotResult(false);
     if (!user) {
       console.error("User not logged in. Cannot analyze.");
