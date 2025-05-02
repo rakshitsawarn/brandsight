@@ -19,17 +19,6 @@ except:
     nlp = None
 
 def is_fake_review(review_text, rating=None, timestamp=None, user=None):
-    """
-    Enhanced fake review detection with multiple heuristics:
-    1. Rating-sentiment mismatch detection
-    2. Excessive use of superlatives
-    3. Overly generic language
-    4. Repeated phrases and patterns
-    5. Bot-like text patterns
-    6. Promotional/sponsored content indicators
-    7. Temporal patterns (if timestamp data available)
-    8. User pattern analysis (if user data available)
-    """
     # Convert to string and lowercase for consistent processing
     review_text = str(review_text).lower() if review_text else ""
     
