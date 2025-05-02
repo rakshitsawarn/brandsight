@@ -346,7 +346,6 @@ def analyze():
             total_keywords
         )
 
-        # Get short description for summary
         short_description = first_sentence(description)
 
         # Create response

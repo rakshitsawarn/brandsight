@@ -135,7 +135,7 @@ const SignUp = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
 
-            console.log("User Details: ", user);
+            // console.log("User Details: ", user);
 
             await axios.post("http://localhost:5000/api/users/registerUser", {
                 UID: user.uid,
