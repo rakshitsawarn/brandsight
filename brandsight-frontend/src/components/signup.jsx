@@ -36,9 +36,14 @@ const SignUp = () => {
     const [emailIsValid, setEmailIsValid] = useState(false);
     const [passwordNotMatched, setPasswordNotMatched] = useState(true);
 
+    const [allValid, setAllValid] = useState(false);
+
     const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false);
+
+    const [allFieldsFIlled, setAllFieldsFIlled] = useState(true);
+    const [signupSuccess, setSignupSuccess] = useState(true);
 
     const checkAndSetEmail = (e) => {
         const emailToCheck = e.target.value;
@@ -71,7 +76,7 @@ const SignUp = () => {
 
         setPasswordRules(newRules);
 
-        const allValid = Object.values(newRules).every(Boolean);
+        setAllValid(Object.values(newRules).every(Boolean))
 
         if (allValid || passToCheck.length === 0) {
             passwordRef.current.style.borderColor = "black";
@@ -98,33 +103,50 @@ const SignUp = () => {
     const handleEmailSignUp = async (e) => {
         e.preventDefault();
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&length=1&background=random&font-size=0.7`;
-            await updateProfile(user, {
-                // displayName: name,
-                photoURL: avatarUrl,
-            });
-
-            await axios.post("http://localhost:5000/api/users/registerUser", {
-                UID: user.uid,
-                name,
-                email,
-                password,
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            console.log("User created as:", userCredential.user.email, userCredential.user.photoURL);
-
-            navigate("/login");
+        if (name === "" || email === "" || password === "" || confirmPassword === "") {
+            console.log("fields are empty");
+            return setAllFieldsFIlled(false);
         }
-        catch (error) {
-            console.error("SignUp error:", error.message);
+        else {
+            setAllFieldsFIlled(true);
+        }
+
+        if (emailIsValid || allValid){
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+    
+                const avatarUrl =  `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&length=1&background=random&font-size=0.7`;
+                await updateProfile(user, {
+                    // displayName: name,
+                    photoURL: avatarUrl,
+                });
+    
+                await axios.post("http://localhost:5000/api/users/registerUser", {
+                    UID: user.uid,
+                    name,
+                    email,
+                    password,
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+    
+                console.log("User created as:", userCredential.user.email, userCredential.user.photoURL);
+    
+                setSignupSuccess(true);
+    
+                navigate("/login");
+            }
+            catch (error) {
+                setSignupSuccess(false);
+    
+                console.error("SignUp error:", error.message);
+            }
+        }
+        else{
+            setSignupSuccess(false);
         }
     };
 
@@ -150,6 +172,7 @@ const SignUp = () => {
 
             console.log("Google user created/logged in:", user.displayName, user.email, user.photoURL);
 
+            
             navigate("/home");
         } catch (error) {
             console.error("Google Sign-Up error:", error.message);
@@ -235,6 +258,10 @@ const SignUp = () => {
                         </div>
 
                         {isConfirmPasswordFocused && confirmPassword.length > 0 && passwordNotMatched && <p className="error-text">Passwords don't match</p>}
+
+                        {name.length === 0 && email.length === 0 && password.length === 0 && confirmPassword.length === 0 && !allFieldsFIlled && <p className="error-text">Please fill all fields</p>}
+
+                        {!signupSuccess && <p className="error-text">SignUp Failed!</p>}
 
                         <button className="submit-btn" type="submit">Create Account</button>
 
