@@ -23,6 +23,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
 
     const [emailIsValid, setEmailIsValid] = useState(false);
+    const [isEmailFocused, setIsEmailFocused] = useState(false);
 
     const [allFieldsFIlled, setAllFieldsFIlled] = useState(true);
     const [loginSuccess, setLoginSuccess] = useState(true);
@@ -51,7 +52,9 @@ const Login = () => {
     const handleEmailLogin = async (e) => {
         e.preventDefault();
 
-        if (email === "" | password === "") {
+        setEmailIsValid(false);
+        if (email === "" || password === "") {
+            console.log("fields are empty");
             return setAllFieldsFIlled(false);
         }
         else {
@@ -130,11 +133,12 @@ const Login = () => {
                                 value={email}
                                 ref={emailRef}
                                 onChange={(e) => checkAndSetEmail(e)}
-
+                                onFocus={() => setIsEmailFocused(true)}
+                                onBlur={() => setIsEmailFocused(false)}
                             />
                         </div>
 
-                        {email.length > 0 && !emailIsValid && <p className="error-text">Enter Valid Email</p>}
+                        {isEmailFocused && email.length > 0 && !emailIsValid && <p className="error-text">Enter Valid Email</p>}
 
                         <div className="label-input">
                             <label>Password</label>
@@ -152,7 +156,7 @@ const Login = () => {
                             />
                         </div>
 
-                        {email.length === 0 && password.length === 0 && !allFieldsFIlled && <p className="error-text">Please fill all fields</p>}
+                        {!allFieldsFIlled && <p className="error-text">Please fill all fields</p>}
 
                         {!loginSuccess && <p className="error-text">Email or Password is wrong</p>}
 
