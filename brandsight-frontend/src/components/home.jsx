@@ -104,7 +104,6 @@ const Home = () => {
   };
 
   const analyzeBrand = async () => {
-    e.preventDefault();
 
     setGotResult(false);
     if (!user) {
