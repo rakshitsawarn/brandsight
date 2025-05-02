@@ -116,7 +116,7 @@ def is_fake_review(review_text, rating=None, timestamp=None, user=None):
             print(f"Error in spaCy analysis: {str(e)}")
     
     # 9. Check for extremely positive language with no specifics
-    extreme_positive_words = ["amazing", "awesome", "fantastic", "incredible", "excellent", "wonderful"]
+    extreme_positive_words = ["amazing", "awesome", "fantastic", "incredible", "excellent", "wonderful", "wow","exceptional","Outstanding"]
     positive_count = sum(review_text.count(word) for word in extreme_positive_words)
     if positive_count >= 2 and word_count < 20 and "because" not in review_text and "which" not in review_text:
         return True, "Vague positive language"
