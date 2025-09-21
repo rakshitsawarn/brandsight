@@ -266,8 +266,8 @@ body {
 }
 
 .feature img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 90px;
     margin-bottom: 2rem;
     transition: transform 0.3s ease;
 }
@@ -347,19 +347,19 @@ body {
     text-align: center;
 }
 
-.label-input {
+.label-input1 {
     margin-bottom: 2rem;
 }
 
-.label-input label {
+.label-input1 label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #e2e8f0;
 }
 
-.label-input input,
-.label-input textarea {
+.label-input1 input,
+.label-input1 textarea {
     width: 100%;
     padding: 1rem;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -371,13 +371,13 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.label-input input::placeholder,
-.label-input textarea::placeholder {
+.label-input1 input::placeholder,
+.label-input1 textarea::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.label-input input:focus,
-.label-input textarea:focus {
+.label-input1 input:focus,
+.label-input1 textarea:focus {
     outline: none;
     border-color: #667eea;
     background: rgba(255, 255, 255, 0.15);

@@ -30,7 +30,7 @@ const GetStarted = () => {
                         <p className="subHeading-1">Get instant insights with sentiment analysis, keyword trends, and growth suggestions.</p>
                     </div>
                     <div className="about-img">
-                        <img src="ChatOn image (1).jpeg" alt="About Image" />
+                        <img src="brandsight_logo.png" alt="About Image" />
                     </div>
                 </div>
                 <button className="startAnalyzing" onClick={() => navigate("/home")} >Start Analyzing ➜</button>
@@ -41,11 +41,11 @@ const GetStarted = () => {
                 <p className="features-container-p">Features</p>
                 <div className="features">
                     <div className="feature">
-                        <img src="sentiment.png" alt="Feature 1" />
-                        <p>Sentiment Overview</p>
+                        <img src="sentiment_analysis.png" alt="Feature 1" />
+                        <p>Sentiment Analysis</p>
                     </div>
                     <div className="feature">
-                        <img src="fake.png" alt="Feature 2" className="definiti" />
+                        <img src="fake_Review.png" alt="Feature 2" className="definiti" />
                         <p>Fake Reiew Detection</p>
                     </div>
                     <div className="feature">
@@ -88,11 +88,11 @@ const GetStarted = () => {
                         </div>
 
                         <form>
-                            <div className="label-input">
+                            <div className="label-input1">
                                 <label>Email</label>
                                 <input type="text" />
                             </div>
-                            <div className="label-input">
+                            <div className="label-input1">
                                 <label>Message</label>
                                 <textarea rows="5"></textarea>
                             </div>
