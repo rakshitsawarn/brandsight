@@ -14,7 +14,7 @@ import nlpApiRoutes from './routes/nlpApiRoute.js';
 dotenv.config();
 
 // MongoDB 
-mongoose.connect(process.env.MONGO_URI_Docker)
+mongoose.connect(process.env.MONGO_URI_Local)
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error(err));
 
