@@ -164,7 +164,7 @@ const Login = () => {
 
                         <div className="line"><span className="or-text">Or</span></div>
 
-                        <button className="google-btn" onClick={handleGoogleSignIn}>SignIn with Google</button>
+                        <button className="google-btn" onClick={handleGoogleSignIn}><img src="https://img.icons8.com/?size=40&id=17949&format=png&color=000000" alt="Google Signin" />SignIn with Google</button>
                     </form>
 
                     <p className="question">Don't have an account? <Link to="/signup">SignUp</Link></p>
