@@ -45,6 +45,7 @@ const Home = () => {
   const [viewReport, setViewReport] = useState(false);
   const [viewAbout, setViewAbout] = useState(false);
   const refSidebar = useRef(null);
+  const refMainbar = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -179,7 +180,17 @@ const Home = () => {
   };
 
   const ToogleSideBar = () => {
-    refSidebar.current.style.display = "flex"; // Correct
+
+    if (toogleSidebar) {
+      refSidebar.current.style.width = "70px";
+      refMainbar.current.style.marginLeft = "70px";
+    } else {
+      refSidebar.current.style.width = "200px";
+      refMainbar.current.style.marginLeft = "200px";
+    }
+
+    console.log("Btn Clicked");
+    console.log("ToogleSideBar: ", toogleSidebar);
 
     setToogleSidebar(!toogleSidebar);
   };
@@ -377,9 +388,8 @@ const Home = () => {
     doc.setFont("helvetica", "normal");
 
     analyzed_reviews.forEach((review, idx) => {
-      const reviewText = `${idx + 1}. ${review.user} - "${
-        review.review
-      }" [Sentiment: ${review.sentiment}, Rating: ${review.rating}]`;
+      const reviewText = `${idx + 1}. ${review.user} - "${review.review
+        }" [Sentiment: ${review.sentiment}, Rating: ${review.rating}]`;
       const lines = doc.splitTextToSize(reviewText, lineWidth);
 
       if (cursorY + lines.length * 5 > 280) {
@@ -401,6 +411,7 @@ const Home = () => {
   return (
     <>
       <div className="body-division">
+
         <div className="nav-bar">
           <div className="menu-button">
             <img
@@ -426,8 +437,11 @@ const Home = () => {
         </div>
 
         <div className="sidebar" ref={refSidebar}>
-          <div className="sideBar-left-part">
-            <div className="sidebar-upper">
+
+          <div className="sidebar-items">
+
+            <div className="sidebar-item">
+
               <div className="nav-link-img">
                 <img
                   src="/home-icon.png"
@@ -438,6 +452,14 @@ const Home = () => {
                 />
               </div>
 
+              <div className="nav-link-label">
+                {toogleSidebar && <a onClick={ViewDashboard}>Dashboard</a>}
+              </div>
+
+            </div>
+
+            <div className="sidebar-item">
+
               <div className="nav-link-img">
                 <img
                   src="/history-icon.png"
@@ -446,6 +468,15 @@ const Home = () => {
                   onClick={ViewHistory}
                 />
               </div>
+
+              <div className="nav-link-label">
+                {toogleSidebar && <a onClick={ViewHistory}>History</a>}
+              </div>
+
+            </div>
+
+            <div className="sidebar-item">
+
               <div className="nav-link-img">
                 <img
                   src="/about.us.png"
@@ -454,21 +485,31 @@ const Home = () => {
                   onClick={ViewAbout}
                 />
               </div>
+
+              <div className="nav-link-label">
+                {toogleSidebar && <a onClick={ViewAbout}>About Us</a>}
+              </div>
+
             </div>
 
-            <div className="sidebar-bottom">
-              <div className="nav-link-img">
-                <img
-                  src="/logout-icon1.png"
-                  alt="Settings"
-                  className="icon-image"
-                  onClick={Logout}
-                />
-              </div>
+          </div>
+
+          <div className="sidebar-bottom">
+            <div className="nav-link-img">
+              <img
+                src="/logout-icon1.png"
+                alt="Settings"
+                className="icon-image"
+                onClick={Logout}
+              />
+            </div>
+            <div className="nav-link-label">
+              {toogleSidebar && <a onClick={Logout}>Logout</a>}
             </div>
           </div>
 
-          <div className="sideBar-right-part">
+
+          {/* <div className="sideBar-right-part" ref={refSidebar}>
             <div className="sidebar-upper">
               <div className="nav-link-label">
                 {toogleSidebar && <a onClick={ViewDashboard}>Dashboard</a>}
@@ -486,55 +527,62 @@ const Home = () => {
                 {toogleSidebar && <a onClick={Logout}>LogOut</a>}
               </div>
             </div>
-          </div>
+          </div> */}
+
         </div>
 
-        {viewDashboard && (
-          <Dashboard
-            brandURL={brandURL}
-            setBrandURL={setBrandURL}
-            reviewNumber={reviewNumber}
-            setReviewNumber={setReviewNumber}
-            analyzeBrand={analyzeBrand}
-            gotResult={gotResult}
-            result={result}
-            expandReviews={expandReviews}
-            expandNegative={expandNegative}
-            expandNeutral={expandNeutral}
-            expandPositive={expandPositive}
-            DownloadReport={DownloadReport}
-          />
-        )}
+        <div className="main-panel" ref={refMainbar}>
 
-        {viewHistory && (
-          <History
-            history={history}
-            OpenReport={OpenReport}
-            formatDate={formatDate}
-          />
-        )}
+          {viewDashboard && (
 
-        {viewAbout && (
-          <About
-            description="BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple."
-            team={[
-              { name: "Harshwardhan Saini", img: "null" },
-              { name: "Amruta Saharkar", img: "amruta Capstone.jpg" },
-              { name: "Rakshit Sawarn", img: "Rakshit Sawarn.png" },
-            ]}
-          />
-        )}
+            <Dashboard
+              brandURL={brandURL}
+              setBrandURL={setBrandURL}
+              reviewNumber={reviewNumber}
+              setReviewNumber={setReviewNumber}
+              analyzeBrand={analyzeBrand}
+              gotResult={gotResult}
+              result={result}
+              expandReviews={expandReviews}
+              expandNegative={expandNegative}
+              expandNeutral={expandNeutral}
+              expandPositive={expandPositive}
+              DownloadReport={DownloadReport}
+            />
+          )}
 
-        {viewReport && (
-          <Report
-            desiredReport={desiredReport}
-            expandNegative={expandNegative}
-            expandNeutral={expandNeutral}
-            expandPositive={expandPositive}
-            expandReviews={expandReviews}
-            DownloadReport={DownloadReport}
-          />
-        )}
+          {viewHistory && (
+            <History
+              history={history}
+              OpenReport={OpenReport}
+              formatDate={formatDate}
+            />
+          )}
+
+          {viewAbout && (
+            <About
+              description="BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple."
+              team={[
+                { name: "Harshwardhan Saini", img: "null" },
+                { name: "Amruta Saharkar", img: "amruta Capstone.jpg" },
+                { name: "Rakshit Sawarn", img: "Rakshit Sawarn.png" },
+              ]}
+            />
+          )}
+
+          {viewReport && (
+            <Report
+              desiredReport={desiredReport}
+              expandNegative={expandNegative}
+              expandNeutral={expandNeutral}
+              expandPositive={expandPositive}
+              expandReviews={expandReviews}
+              DownloadReport={DownloadReport}
+            />
+          )}
+
+        </div>
+
       </div>
     </>
   );
