@@ -40,7 +40,7 @@ const getPlaceIdFromGoogleMapsUrl = (url) => {
 
 const analyzeSentiment = async (uid, brandURLType, title, icon, description, reviews) => {
   try {
-      const response = await axios.post("http://nlp-api:5001/analyze", {uid, brandURLType, title, icon, description, reviews});
+      const response = await axios.post("http://localhost:8000/analyze", {uid, brandURLType, title, icon, description, reviews});
       //const response = await axios.post("http://localhost:5001/analyze", {uid, brandURLType, title, icon, description, reviews});
 
       await saveReport(response.data);
