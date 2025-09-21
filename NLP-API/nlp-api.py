@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from groq import Groq
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -55,9 +56,23 @@ async def analyze_reviews_batch(reviews, model="llama-3.1-8b-instant"):
 
     print("Response: ", response)
     content = response.choices[0].message.content.strip()
-    try:
-        return json.loads(content)
-    except:
+    
+    # Remove code block markers
+    if content.startswith("```"):
+        content = re.sub(r"^```(?:json)?\n?", "", content)
+        content = re.sub(r"\n?```$", "", content)
+
+    # Extract only the first JSON array from the response
+    match = re.search(r"\[\s*{[\s\S]*}\s*\]", content)
+    if match:
+        json_str = match.group(0)
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print("JSON parse error:", e, "\nRaw JSON candidate:", json_str)
+            return []
+    else:
+        print("No JSON array found in response:", content)
         return []
 
 async def generate_suggestions_from_reviews(description, reviews_batch, model="gemma2-9b-it"):
