@@ -29,13 +29,13 @@ const Dashboard = ({
     DownloadReport = () => { }
 }) => {
     return (
-        <div className="main-panel">
+        <div className="main-panel-h">
             <p className="heading">Analyze a Brand's Reputation</p>
             <p className="sub-heading">Get real-time sentiment insights from app or store reviews</p>
 
             <input
                 type="text"
-                className="url-field"
+                className="url-field-h"
                 placeholder="Enter URL"
                 value={brandURL}
                 onChange={(e) => setBrandURL(e.target.value)}
@@ -53,7 +53,7 @@ const Dashboard = ({
                 />
             </div>
 
-            <button className="fetch-btn" onClick={analyzeBrand}>
+            <button className="fetch-btn-h" onClick={analyzeBrand}>
                 Fetch & Analyze ➜
             </button>
 
@@ -73,7 +73,7 @@ const Dashboard = ({
                         </div>
 
                         {result?.sentiment_distribution && (
-                            <div className="over-results">
+                            <div>
                                 <div className="sentiment-category">
                                     Negative: {result.sentiment_distribution.negative ?? 0}%
                                 </div>

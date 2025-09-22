@@ -62,6 +62,8 @@ const Login = () => {
         }
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // const res = await axios.post(`http://localhost:5000/api/auth/login`, { email, password });
+
 
             console.log("Logged in as:", userCredential.user.email);
 
@@ -95,6 +97,9 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
             });
+
+            // const res = await axios.post(`http://localhost:5000/api/auth/signup`, { name, email, password });
+
 
             console.log("Google user created/logged in:", user.uid, user.displayName, user.email, user.photoURL);
 

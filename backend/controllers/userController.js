@@ -1,4 +1,4 @@
-import User from '../models/user.js'
+import User from '../models/User.js'
 import Report from '../models/Report.js'
 // const User = require('../models/user')
 // const Report = require('../models/Report')

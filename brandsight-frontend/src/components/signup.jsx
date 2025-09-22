@@ -122,17 +122,19 @@ const SignUp = () => {
                     photoURL: avatarUrl,
                 });
     
-                await axios.post("http://localhost:5000/api/users/registerUser", {
+                await axios.post("http://localhost:5000//api/auth/signup", {
                     UID: user.uid,
                     name,
                     email,
                     password,
                 }, {
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json",   
                     },
                 });
     
+                // const res = await axios.post(`http://localhost:5000/api/auth/login`, { email, password }, { withCredentials: true });
+
                 console.log("User created as:", userCredential.user.email, userCredential.user.photoURL);
     
                 setSignupSuccess(true);

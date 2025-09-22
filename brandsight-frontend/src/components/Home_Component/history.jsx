@@ -1,6 +1,6 @@
 const History = ({ history, OpenReport, formatDate }) => {
     return (
-         <div className="main-panel" style={{ justifyContent: "flex-start" }}>
+         <div className="history-panel" style={{ justifyContent: "flex-start" }}>
 
             {history.map((report) => (
                 <div className="reports-container" key={report._id} onClick={() => OpenReport(report._id)}>

@@ -15,7 +15,7 @@ const Home = () => {
   const user = useCurrentUser();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("User");
+  const [username, setUsername] = useState("Login");
   const [profileImageUrl, setProfileImageUrl] = useState("");
   const [brandURL, setBrandURL] = useState("");
   const [reviewNumber, setReviewNumber] = useState(10);
@@ -46,6 +46,7 @@ const Home = () => {
   const [viewAbout, setViewAbout] = useState(false);
   const refSidebar = useRef(null);
   const refMainbar = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 930);
 
   useEffect(() => {
     if (user) {
@@ -68,6 +69,23 @@ const Home = () => {
       setProfileImageUrl(null);
     }
   }, [user]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const desktop = window.innerWidth >= 930;
+      setIsDesktop(desktop);
+      if (desktop) {
+        refMainbar.current.style.marginLeft = toogleSidebar ? "290px" : "75px";
+      } else {
+        refMainbar.current.style.marginLeft = "0px";
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [toogleSidebar]);
 
   const retrieveUserData = async () => {
     try {
@@ -147,6 +165,10 @@ const Home = () => {
 
       console.log("Analysis Report:", response.data);
 
+      console.log("Suggestions: ", response.data.suggestions);
+
+      console.log(typeof(response.data.suggestions));
+      
       setResult({
         title: response.data.title,
         icon: response.data.icon,
@@ -180,19 +202,8 @@ const Home = () => {
   };
 
   const ToogleSideBar = () => {
-
-    if (toogleSidebar) {
-      refSidebar.current.style.width = "70px";
-      refMainbar.current.style.marginLeft = "70px";
-    } else {
-      refSidebar.current.style.width = "200px";
-      refMainbar.current.style.marginLeft = "200px";
-    }
-
-    console.log("Btn Clicked");
-    console.log("ToogleSideBar: ", toogleSidebar);
-
-    setToogleSidebar(!toogleSidebar);
+    console.log("Btn Clicked, toogleSidebar:", toogleSidebar);
+    setToogleSidebar(prev => !prev); // just toggle state
   };
 
   const ViewDashboard = () => {
@@ -202,29 +213,29 @@ const Home = () => {
     setViewDashboard(true);
   };
 
-  const Suggestions = ({ suggestions }) => {
-    return (
-      <section className="suggestion-section">
-        {suggestions.map((s, idx) => {
-          const [rawHeading, ...rest] = s.split(":");
-          const heading = rawHeading.trim();
-          const body = rest.join(":");
-          const points = body.split(/\n-\s*/).filter(Boolean);
+  // const Suggestions = ({ suggestions }) => {
+  //   return (
+  //     <section className="suggestion-section">
+  //       {suggestions.map((s, idx) => {
+  //         const [rawHeading, ...rest] = s.split(":");
+  //         const heading = rawHeading.trim();
+  //         const body = rest.join(":");
+  //         const points = body.split(/\n-\s*/).filter(Boolean);
 
-          return (
-            <article key={idx} className="suggestion-block">
-              <h4>{heading}:</h4>
-              <ul>
-                {points.map((p, i) => (
-                  <li key={i}>{p.trim()}</li>
-                ))}
-              </ul>
-            </article>
-          );
-        })}
-      </section>
-    );
-  };
+  //         return (
+  //           <article key={idx} className="suggestion-block">
+  //             <h4>{heading}:</h4>
+  //             <ul>
+  //               {points.map((p, i) => (
+  //                 <li key={i}>{p.trim()}</li>
+  //               ))}
+  //             </ul>
+  //           </article>
+  //         );
+  //       })}
+  //     </section>
+  //   );
+  // };
 
   const ViewHistory = async () => {
     setViewAbout(false);
@@ -410,20 +421,21 @@ const Home = () => {
 
   return (
     <>
-      <div className="body-division">
-
-        <div className="nav-bar">
-          <div className="menu-button">
-            <img
-              src="/menu-icon.png"
-              alt="Menu"
-              className="icon-image"
-              onClick={ToogleSideBar}
-            />
-            <p className="logo">BrandSight </p>
-          </div>
-
-          <div className="profile-section">
+      <div className="navbar">
+        <div className="menu-button">
+          <img
+            src={`${!toogleSidebar ? "/menu-icon.png" : "https://img.icons8.com/?size=100&id=2i5n7zNvArOt&format=png&color=1A1A1A"}`}
+            alt="Menu"
+            className="icon-image-h"
+            onClick={ToogleSideBar}
+          />
+        </div>
+        <div className="logo-profile">
+          <div className="logoo">BrandSight</div>
+          <div className="profile-section"
+            onClick={() => {
+              if (!user) navigate("/login");
+            }}>
             <p className="user-name">{username}</p>
             <div className="profile-img">
               <img
@@ -435,155 +447,122 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="sidebar" ref={refSidebar}>
+      {/* Optional mobile backdrop */}
+      {!isDesktop && toogleSidebar && (
+        <div className="backdrop" onClick={ToogleSideBar}></div>
+      )}
 
-          <div className="sidebar-items">
+      {/* Sidebar */}
+      <div className={`sidebar-h ${toogleSidebar ? "expanded" : ""}`} ref={refSidebar}>
+        <div className="sidebar-items">
 
+          <div>
             <div className="sidebar-item">
-
-              <div className="nav-link-img">
+              <div className="nav-link-img-h">
                 <img
                   src="/home-icon.png"
                   alt="Dashboard"
-                  className="icon-image"
+                  className="icon-image-h"
                   onClick={ViewDashboard}
-                  style={{ marginTop: "0px", borderTop: "2px solid black" }}
                 />
               </div>
-
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewDashboard}>Dashboard</a>}
-              </div>
-
+              {toogleSidebar && <div className="nav-link-label-h"><a onClick={ViewDashboard}>Dashboard</a></div>}
             </div>
 
             <div className="sidebar-item">
-
-              <div className="nav-link-img">
+              <div className="nav-link-img-h">
                 <img
                   src="/history-icon.png"
                   alt="History"
-                  className="icon-image"
+                  className="icon-image-h"
                   onClick={ViewHistory}
                 />
               </div>
-
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewHistory}>History</a>}
-              </div>
-
+              {toogleSidebar && <div className="nav-link-label-h"><a onClick={ViewHistory}>History</a></div>}
             </div>
 
             <div className="sidebar-item">
-
-              <div className="nav-link-img">
+              <div className="nav-link-img-h">
                 <img
                   src="/about.us.png"
-                  alt="Analyze"
-                  className="icon-image"
+                  alt="About Us"
+                  className="icon-image-h"
                   onClick={ViewAbout}
                 />
               </div>
-
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewAbout}>About Us</a>}
-              </div>
-
+              {toogleSidebar && <div className="nav-link-label-h"><a onClick={ViewAbout}>About Us</a></div>}
             </div>
-
           </div>
 
-          <div className="sidebar-bottom">
-            <div className="nav-link-img">
+          <div className="sidebar-item">
+            <div className="nav-link-img-h">
               <img
                 src="/logout-icon1.png"
-                alt="Settings"
-                className="icon-image"
+                alt="Logout"
+                className="icon-image-h"
                 onClick={Logout}
               />
             </div>
-            <div className="nav-link-label">
-              {toogleSidebar && <a onClick={Logout}>Logout</a>}
-            </div>
+            {toogleSidebar && <div className="nav-link-label-h"><a onClick={Logout}>Logout</a></div>}
           </div>
-
-
-          {/* <div className="sideBar-right-part" ref={refSidebar}>
-            <div className="sidebar-upper">
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewDashboard}>Dashboard</a>}
-              </div>
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewHistory}>History</a>}
-              </div>
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={ViewAbout}>About Us</a>}
-              </div>
-            </div>
-
-            <div className="sidebar-bottom">
-              <div className="nav-link-label">
-                {toogleSidebar && <a onClick={Logout}>LogOut</a>}
-              </div>
-            </div>
-          </div> */}
-
         </div>
+      </div>
 
-        <div className="main-panel" ref={refMainbar}>
+      {/* Main content */}
+      <div style={{ height: "100%" }} ref={refMainbar}>
 
-          {viewDashboard && (
+        {viewDashboard && (
 
-            <Dashboard
-              brandURL={brandURL}
-              setBrandURL={setBrandURL}
-              reviewNumber={reviewNumber}
-              setReviewNumber={setReviewNumber}
-              analyzeBrand={analyzeBrand}
-              gotResult={gotResult}
-              result={result}
-              expandReviews={expandReviews}
-              expandNegative={expandNegative}
-              expandNeutral={expandNeutral}
-              expandPositive={expandPositive}
-              DownloadReport={DownloadReport}
-            />
-          )}
+          <Dashboard
+            brandURL={brandURL}
+            setBrandURL={setBrandURL}
+            reviewNumber={reviewNumber}
+            setReviewNumber={setReviewNumber}
+            analyzeBrand={analyzeBrand}
+            gotResult={gotResult}
+            result={result}
+            expandReviews={expandReviews}
+            expandNegative={expandNegative}
+            expandNeutral={expandNeutral}
+            expandPositive={expandPositive}
+            DownloadReport={DownloadReport}
+          />
+        )}
 
-          {viewHistory && (
-            <History
-              history={history}
-              OpenReport={OpenReport}
-              formatDate={formatDate}
-            />
-          )}
+        {viewHistory && (
+          <History
+            history={history}
+            OpenReport={OpenReport}
+            formatDate={formatDate}
+          />
+        )}
 
-          {viewAbout && (
-            <About
-              description="BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple."
-              team={[
-                { name: "Harshwardhan Saini", img: "null" },
-                { name: "Amruta Saharkar", img: "amruta Capstone.jpg" },
-                { name: "Rakshit Sawarn", img: "Rakshit Sawarn.png" },
-              ]}
-            />
-          )}
+        {viewAbout && (
+          <About
+            description="BrandSight is a smart brand analysis platform designed to help businesses understand their online reputation through AI-driven insights. Whether you're listed on the Play Store or Google Maps, BrandSight collects customer reviews, filters out fake feedback, and performs advanced sentiment analysis to generate clear, actionable reports. Our dashboard gives you a visual trend of how your reputation evolves over time, and personalized AI suggestions help you improve customer satisfaction. With optional login, users can save and revisit past analyses anytime. Powered by the MERN stack and advanced NLP models, BrandSight is your go-to tool for brand intelligence made simple."
+            team={[
+              { name: "Harshwardhan Saini", img: "null" },
+              { name: "Amruta Saharkar", img: "amruta Capstone.jpg" },
+              { name: "Rakshit Sawarn", img: "Rakshit Sawarn.png" },
+            ]}
+          />
+        )}
 
-          {viewReport && (
-            <Report
-              desiredReport={desiredReport}
-              expandNegative={expandNegative}
-              expandNeutral={expandNeutral}
-              expandPositive={expandPositive}
-              expandReviews={expandReviews}
-              DownloadReport={DownloadReport}
-            />
-          )}
-
-        </div>
+        {viewReport && (
+          <Report
+            desiredReport={desiredReport}
+            expandNegative={expandNegative}
+            expandNeutral={expandNeutral}
+            expandPositive={expandPositive}
+            expandReviews={expandReviews}
+            DownloadReport={DownloadReport}
+          />
+        )}
 
       </div>
+
     </>
   );
 };

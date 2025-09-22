@@ -6,8 +6,6 @@
   justify-content: flex-start;
   flex: 1;
   min-height: calc(100vh - 80px);
-  margin-top: 80px;
-  margin-left: 80px;
   padding: var(--space-20) var(--space-8);
   background: transparent;
   position: relative;
@@ -994,7 +992,7 @@ body {
   align-items: center;
   gap: var(--space-5);
   margin: var(--space-8) 0;
-  padding: var(--space-6) var(--space-8);
+  padding: 15px 20px;
   background: var(--surface-card);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
@@ -1072,19 +1070,41 @@ body {
 .fetch-btn:active {
   transform: translateY(0);
 }
-
+.history-panel{
+  height: calc(100vh - 80px);
+  width: 100%;
+  padding: 0px 20px;
+}
 /* Executive Cards Layout */
 .result-container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
 }
+.reports-container {
+  background: var(--surface-card);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+  margin: 20px 0;
+  padding: 10px 10px;
+  transition: var(--transition-normal);
+  border: 1px solid var(--border-dark);
+  position: relative;
+  overflow: hidden;
+}
 
+.report{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.suggestion{
+  color: #e1e1e1;
+}
 .overview,
 .review-breakdown,
 .keywords,
-.suggestions,
-.reports-container {
+.suggestions{
   background: var(--surface-card);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-md);
@@ -1179,6 +1199,13 @@ body {
   margin: var(--space-10) 0;
 }
 
+.sentiment-category{
+  color: rgb(232, 232, 232);
+}
+.over-text{
+    color: rgb(232, 232, 232);
+
+}
 .sentiment-category-e {
   padding: var(--space-6) var(--space-8);
   border-radius: var(--radius-xl);
@@ -1194,6 +1221,8 @@ body {
   box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
+  color: #dadada;
+  background-color:#0f172a;
 }
 
 .sentiment-category-e::before {
@@ -1481,6 +1510,34 @@ body {
   }
 }
 
+.suggestion-header {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.suggestion-ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.suggestion-subul {
+  list-style-type: circle;
+  padding-left: 20px;
+}
+
+.suggestion-item {
+  margin-bottom: 10px;
+}
+
+.suggestion-subitem {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.suggestions-list{
+  color: white;
+}
+
 @media (max-width: 480px) {
   .user-name {
     display: none;
@@ -1578,4 +1635,16 @@ body {
     --gray-300: #4b5563;
     --gradient-surface: linear-gradient(135deg, #111827 0%, #1f2937 100%);
   }
+}
+
+.expand-btn {
+  width: 14px;
+  height: 14px;
+  transform: rotate(-90deg);
+  filter: invert(1);
+  transition: transform 0.3s ease;
+}
+
+.expand-btn.rotated {
+  transform: rotate(0deg);
 }

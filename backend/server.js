@@ -6,6 +6,9 @@ import cors from 'cors';
 import userRoutes from './routes/userRoute.js';
 import nlpApiRoutes from './routes/nlpApiRoute.js';
 
+//new
+import authRoutes from './routes/authRoutes.js';
+
 // const express = require('express');
 // const mongoose = require('mongoose');
 // const dotenv = require('dotenv');
@@ -31,6 +34,10 @@ app.get('/', (req, res)=>{
 // Main Routes
 app.use('/api/users', userRoutes);
 app.use('/api/nlpApi', nlpApiRoutes);
+
+// new
+app.use("/api/auth", authRoutes);
+
 // app.use('/api/users', require('./routes/userRoute'));
 // app.use('/api/nlpApi', require('./routes/nlpApiRoute'));
 
